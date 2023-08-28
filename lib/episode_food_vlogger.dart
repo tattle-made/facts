@@ -1,3 +1,4 @@
+import 'package:facts/episode_food_vlogger_puzzles.dart';
 import 'package:facts/image_forensic_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _EpisodeState extends State<EpisodeFoodVlogger> {
 class _Lesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -41,12 +42,21 @@ class _Lesson extends StatelessWidget {
         ImageForensicSlider(),
         Text('Sometimes they are used to make the pictures stylish\n\n'),
         ImageForensicSlider(),
-        Text(
+        const Text(
             'Sometimes they are used to alter the meaning of a photo completely\n\n'),
         ImageForensicSlider(),
-        Text(
+        const Text(
             'These digital manipulation techniques can sometimes be used to spread misinformation. For a media literate person, it is important to distinguish between the objective description and the subjective interpretation of a photo. Thankfully, these same tools and techniques can be used to investigate image manipulation. \n\n'),
-        Text('We will learn about them by solving a murder mystery!')
+        const Text('We will learn about them by solving a murder mystery!'),
+        ElevatedButton(
+            onPressed: () {
+              print('hi');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EpisodeFoodVloggerPuzzles()));
+            },
+            child: Text('Click'))
       ],
     );
   }

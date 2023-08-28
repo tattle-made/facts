@@ -1,4 +1,5 @@
 import 'package:facts/episode_food_vlogger.dart';
+import 'package:facts/episode_food_vlogger_puzzles.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            const EpisodeFoodVlogger()
+            EpisodeFoodVloggerPuzzles()
           ],
         ),
       ),

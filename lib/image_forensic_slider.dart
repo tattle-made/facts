@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ImageForensicSlider extends StatefulWidget {
-  const ImageForensicSlider({super.key});
+  final Function? onSlide;
+  const ImageForensicSlider({super.key, this.onSlide});
 
   @override
   State<ImageForensicSlider> createState() => _ImageForensicSliderState();
@@ -76,6 +77,7 @@ class _ImageForensicSliderState extends State<ImageForensicSlider> {
                   pixelSize = position.dx;
                   pixelSize2 = position.dy;
                 });
+                widget.onSlide?.call(position.dx, position.dy);
               },
             ),
           ),
