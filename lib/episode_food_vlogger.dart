@@ -15,7 +15,7 @@ class _EpisodeState extends State<EpisodeFoodVlogger> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
+      color: Color.fromARGB(255, 201, 203, 163),
       padding: const EdgeInsets.all(12.0),
       child: _Lesson(),
     );
