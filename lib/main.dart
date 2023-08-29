@@ -1,6 +1,9 @@
 import 'package:facts/episode_food_vlogger.dart';
+import 'package:facts/episode_food_vlogger_carousel.dart';
 import 'package:facts/episode_food_vlogger_puzzles.dart';
+import 'package:facts/puzzle_find_object.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,35 +71,53 @@ class _MyHomePageState extends State<MyHomePage> {
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color.fromARGB(255, 201, 203, 163),
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title,
+            style: GoogleFonts.pressStart2p(
+                textStyle: TextStyle(
+                    color: Color.fromARGB(255, 71, 45, 48), fontSize: 40.0))),
       ),
       body: ColoredBox(
-        color: Colors.red,
-        child: ListView(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                const Text(
-                  'You have pushed the button this many times',
+          color: Color.fromARGB(255, 201, 203, 163),
+          child: ListView(
+            children: <Widget>[
+              // Row(
+              //   children: <Widget>[
+              //     const Text(
+              //       'You have pushed the button this many times',
+              //     ),
+              //     Text(
+              //       '$_counter',
+              //       style: Theme.of(context).textTheme.headlineMedium,
+              //     ),
+              //   ],
+              // ),
+              PuzzleFindObject(),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Score Goes Here',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                        )),
+                    Text('Score Goes Here',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                        )),
+                    Text('Score Goes Here',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                        ))
+                  ],
                 ),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ],
-            ),
-            EpisodeFoodVloggerPuzzles()
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+              )
+            ],
+          )),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

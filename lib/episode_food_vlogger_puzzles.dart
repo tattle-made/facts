@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:facts/image_forensic_region.dart';
 import 'package:facts/image_forensic_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +12,11 @@ class EpisodeFoodVloggerPuzzles extends StatefulWidget {
 }
 
 class _State extends State<EpisodeFoodVloggerPuzzles> {
-  double sliderX = 0;
-  double sliderY = 0;
+  Region region = Region(Offset(0, 0), Size(0, 0));
 
-  void onSlide(double x, double y) {
-    print('sliding $x : $y');
+  void onRegionChange(Region r) {
     setState(() {
-      sliderX = x;
-      sliderY = y;
+      region = r;
     });
   }
 
@@ -35,31 +35,37 @@ class _State extends State<EpisodeFoodVloggerPuzzles> {
           height: 240,
           child: Stack(
             children: [
-              ImageForensicSlider(
-                onSlide: onSlide,
+              ImageForensicRegion(
+                onChange: onRegionChange,
               ),
-              CustomPaint(painter: Painter(sliderX))
+              CustomPaint(painter: Painter(region))
             ],
           ),
-        )
+        ),
+        Text('Region $region')
       ],
     );
   }
 }
 
 class Painter extends CustomPainter {
-  double sliderX = 0;
+  Region region;
+
+  Painter(this.region);
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawRect(Rect.fromLTWH(sliderX, 0, 10, 240),
-        Paint()..color = Color.fromARGB(255, 255, 225, 168));
+    canvas.drawRect(
+        Rect.fromLTWH(region.origin.dx, region.origin.dy, region.dim.width,
+            region.dim.height),
+        Paint()
+          ..strokeWidth = 2.0
+          ..style = PaintingStyle.stroke
+          ..color = Color.fromARGB(255, 255, 225, 168));
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
-
-  Painter(this.sliderX);
 }
