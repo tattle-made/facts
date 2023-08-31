@@ -7,15 +7,20 @@ import 'package:flutter/services.dart';
 
 class ImageForensicSlider extends StatefulWidget {
   final Function? onSlide;
-  const ImageForensicSlider({super.key, this.onSlide});
+  String imagePath1 = "assets/snapchat_01.jpg";
+  String imagePath2 = "assets/snapchat_02.jpg";
+  ImageForensicSlider(
+      {super.key,
+      this.onSlide,
+      required this.imagePath1,
+      required this.imagePath2});
 
   @override
   State<ImageForensicSlider> createState() => _ImageForensicSliderState();
 }
 
 class _ImageForensicSliderState extends State<ImageForensicSlider> {
-  late Timer timer;
-  double pixelSize = 0;
+  double pixelSize = 200;
   double pixelSize2 = 0;
   double increment = 10;
   FragmentShader? shader;
@@ -23,25 +28,15 @@ class _ImageForensicSliderState extends State<ImageForensicSlider> {
   ui.Image? image2;
 
   void loadMyShader() async {
-    final imageData = await rootBundle.load('assets/snapchat_01.jpg');
+    final imageData = await rootBundle.load(widget.imagePath1);
     image = await decodeImageFromList(imageData.buffer.asUint8List());
-    final imageData2 = await rootBundle.load('assets/snapchat_02.jpg');
+    final imageData2 = await rootBundle.load(widget.imagePath2);
     image2 = await decodeImageFromList(imageData2.buffer.asUint8List());
 
     var program = await FragmentProgram.fromAsset('shaders/shader_pixel.frag');
     shader = program.fragmentShader();
     setState(() {
       // trigger a repaint
-    });
-
-    timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      // setState(() {
-      //   pixelSize += increment;
-      //   if (pixelSize == 450 || pixelSize == 0) {
-      //     increment *= -1;
-      //     pixelSize += increment;
-      //   }
-      // });
     });
   }
 
@@ -53,7 +48,6 @@ class _ImageForensicSliderState extends State<ImageForensicSlider> {
 
   @override
   void dispose() {
-    timer.cancel();
     super.dispose();
   }
 
@@ -62,25 +56,39 @@ class _ImageForensicSliderState extends State<ImageForensicSlider> {
     if (shader == null) {
       return const Center(child: CircularProgressIndicator());
     } else {
-      return Stack(
+      return Column(
         children: [
-          SizedBox(
-            width: 400.0,
-            height: 400.0,
-            child: GestureDetector(
-              child: CustomPaint(
-                  painter: PixelationShaderPainter(
-                      shader!, pixelSize, pixelSize2, image!, image2!)),
-              onPanUpdate: (details) {
-                var position = details.globalPosition;
-                setState(() {
-                  pixelSize = position.dx;
-                  pixelSize2 = position.dy;
-                });
-                widget.onSlide?.call(position.dx, position.dy);
-              },
+          Container(
+            color: Color.fromARGB(255, 201, 203, 163),
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            height: 1 / 2 * MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [
+                Container(
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: GestureDetector(
+                      child: CustomPaint(
+                          painter: PixelationShaderPainter(
+                              shader!, pixelSize, pixelSize2, image!, image2!)),
+                      onPanUpdate: (details) {
+                        var position = details.localPosition;
+                        setState(() {
+                          pixelSize = position.dx;
+                          pixelSize2 = position.dy;
+                        });
+                        widget.onSlide?.call(position.dx, position.dy);
+                      },
+                    ),
+                  ),
+                ),
+                CustomPaint(
+                  painter: SliderHandle(pixelSize),
+                )
+              ],
             ),
-          ),
+          )
         ],
       );
     }
@@ -115,4 +123,26 @@ class PixelationShaderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+class SliderHandle extends CustomPainter {
+  double sliderLocation;
+
+  SliderHandle(this.sliderLocation);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..strokeWidth = 8.0
+      ..style = PaintingStyle.stroke
+      ..color = Color.fromARGB(255, 226, 109, 92);
+    canvas.drawLine(
+        Offset(sliderLocation, 0), Offset(sliderLocation, size.height), paint);
+    // canvas.drawRect(Rect.fromLTWH(0, 0, 200, size.height), paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
 }

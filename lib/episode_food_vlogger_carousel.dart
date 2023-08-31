@@ -1,4 +1,4 @@
-import 'package:facts/episode_food_vlogger.dart';
+import 'package:facts/lesson_food_vlogger.dart';
 import 'package:facts/episode_food_vlogger_puzzles.dart';
 import 'package:facts/image_forensic_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,10 +54,16 @@ class Carousel extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (num) {
       case 0:
-        return ImageForensicSlider();
+        return ImageForensicSlider(
+          imagePath1: "assets/snapchat_01.jpg",
+          imagePath2: "assets/snapchat_02.jpg",
+        );
       case 1:
         return EpisodeFoodVloggerPuzzles();
     }
-    return ImageForensicSlider();
+    return ImageForensicSlider(
+      imagePath1: "assets/snapchat_01.jpg",
+      imagePath2: "assets/snapchat_02.jpg",
+    );
   }
 }

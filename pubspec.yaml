@@ -66,6 +66,9 @@ flutter:
     - shaders/shader_pixel.frag
     - shaders/shader_region.frag
     - shaders/shader_pan.frag
+    - shaders/shader_lens.frag
+    - shaders/shader_image.frag
+    - shaders/shader_whitebalance.frag
 
   # To add assets to your application, add an assets section, like this:
   # assets:
