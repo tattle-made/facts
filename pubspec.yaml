@@ -36,6 +36,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^5.1.0
+  image_compare: ^1.1.2
+  audioplayers: ^5.2.0
+  http: ^1.1.0
+  universal_html: ^2.2.4
+  fk_user_agent: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +66,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/bg-loop.wav
 
   shaders:
     - shaders/shader_pixel.frag

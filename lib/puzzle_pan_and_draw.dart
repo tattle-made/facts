@@ -192,7 +192,9 @@ class _PuzzlePandAndDrawState extends State<PuzzlePandAndDraw> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Heading('Catch Up!'),
+                              Heading('Train your Eyes!'),
+                              Paragraph(
+                                  'The very first skill you need is the ability to closely observe images and look for details \n'),
                               Paragraph(
                                   "A sharp detective should be able to find Needle in a haystack. Your first task is much simpler. Can you find the ketchup bottle in Ms Masoorie’s Pantry?"),
                               Button(label: "Next", onClick: hideTask)

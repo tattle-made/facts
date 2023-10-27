@@ -41,7 +41,7 @@ class _Lesson extends StatelessWidget {
             '\nShe was last seen tasting her home cooked Chat. People are calling it a Chat Attack!'),
         Image(image: AssetImage("assets/masoori-faint.gif")),
         Paragraph(
-            "\nDeath of a celebrity and no knowledge on who the murderer is draws out conspiracy theories on social media. Thousands of images from her last vlog are being shared - some real and some manipulated. The world needs an Eagle Eyed detective to go through these images to make sense of this mess. \n"),
+            "\nDeath of a celebrity and no knowledge on who the murderer is draws out conspiracy theories on social media. Thousands of images from her last vlog are being shared - some real and some manipulated. Can you help sort this mess out? \n"),
         GestureDetector(
             onTap: () {
               onFinish?.call();

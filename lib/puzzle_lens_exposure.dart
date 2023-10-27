@@ -126,18 +126,23 @@ class _PuzzleLensExposureState extends State<PuzzleLensExposure> {
                           ),
                         )),
                     showInstructions
-                        ? Container(
+                        ? SingleChildScrollView(
+                            child: Container(
                             color: Color.fromARGB(255, 201, 203, 163),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Heading('Lighten \nUp!'),
                                 Paragraph(
+                                    "Exposure is the amount of light that reaches your camera’s sensor, creating the image over a period of time. That time period could be fractions of a second or entire hours. Our eyes perceive change in exposure as change in the brightness of an image. \n"),
+                                Paragraph(
+                                    "\nPeople often change the exposure of an image to make it dark and hide certain details\n"),
+                                Paragraph(
                                     "There is a picture of Ms Masoorie’s kitchen that is going viral claiming that a ghost can be seen in her microwave. Many people believe it's what killed her. Could you shed some light on it?"),
                                 Button(label: "Next", onClick: hideTask)
                               ],
                             ),
-                          )
+                          ))
                         : Container(),
                   ],
                 )),

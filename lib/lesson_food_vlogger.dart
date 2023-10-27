@@ -62,7 +62,8 @@ class _Lesson extends StatelessWidget {
         ),
         Paragraph(
             "\nThese digital manipulation techniques can sometimes be used to spread misinformation. For a media literate person, it is important to distinguish between the objective description and the subjective interpretation of a photo. Thankfully, these same tools and techniques can be used to investigate image manipulation. \n"),
-        Paragraph("\nWe will learn about them by solving a murder mystery!\n"),
+        Paragraph(
+            "\nYour name is \"Agent Eye\". Your goal is to become a detective and solve controversies on social media. Through this training module, you will learn new skills. \n"),
         GestureDetector(
             onTap: () {
               onFinish?.call();
@@ -83,7 +84,7 @@ class _Lesson extends StatelessWidget {
                     size: 48.0,
                     semanticLabel: 'Draw Rectangle',
                   ),
-                  const Text("Play")
+                  const Text("Ok")
                 ],
               ),
             )),

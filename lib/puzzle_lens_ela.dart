@@ -135,6 +135,9 @@ class _PuzzleLensELAState extends State<PuzzleLensELA> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                Heading('Adding objects'),
+                                Paragraph(
+                                    'Using image editing tools, its now possible to add objects that are not even in the original picture. These alterations are done to provide a change the meaning of the image.'),
                                 Heading('Drinking on the\nJob'),
                                 Paragraph(
                                     "People are circulating manipulated images of her kitchen to prove that she was drunk while cooking.\n Look for visual clues in the image and find if this claim is correct"),
