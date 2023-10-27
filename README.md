@@ -1,6 +1,11 @@
-# facts
+# Factual Accuracy Checking Tutorials
+A series of Interactive in-classroom Games for teaching Media Literacy skills.
 
-Factual Accuracy Checking Tutorials
+
+## Blog Posts 
+- [Project Reading List](https://tattle.co.in/blog/factshala-project-reading-list)
+- [Insights from Instructors](https://tattle.co.in/blog/media-literacy-in-classrooms-insights-from-instructors)
+
 
 ## Getting Started
 
