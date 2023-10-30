@@ -4,7 +4,7 @@
 import 'package:facts/data/model.dart';
 import 'package:facts/data/data.dart' as contentData;
 
-final LEVEL_COUNT = 4;
+final LEVEL_COUNT = 5;
 final STARTING_PATH = "1.0.0";
 
 class RouterLevel {

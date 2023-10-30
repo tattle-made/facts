@@ -67,13 +67,14 @@ class _State extends State<ScreenPlayerLab>
                         color: Color.fromARGB(255, 178, 43, 42),
                         textStyle: TextStyle(fontSize: 12.0))),
               ),
-              Artboard(playerCanvas: targetCanvas),
+              Artboard(playerCanvas: targetCanvas, onChange: redraw),
               Container(
-                height: 80,
+                height: 12
               ),
               GestureDetector(
                 child: Artboard(
                   playerCanvas: playerCanvas,
+                  onChange: redraw,
                 ),
                 onScaleStart: (details) {
                   manager.onScaleStart(details);

@@ -37,6 +37,11 @@ class PlayerLabCanvas {
       var imageData = await rootBundle.load(layers?[i].image?.path ?? "");
       layers?[i].image?.image =
           await decodeImageFromList(imageData.buffer.asUint8List());
+
+      if(layers?[i].image!.shaderPath!=null){
+        var program = await FragmentProgram.fromAsset(layers?[i].image!.shaderPath ?? "shaders/shader_image.frag");
+        layers?[i].image!.shader = program.fragmentShader();
+      }
     }
   }
 }

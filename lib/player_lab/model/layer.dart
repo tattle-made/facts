@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'dart:math';
 import 'package:facts/player_lab/model/image.dart';
+import 'package:facts/player_lab/model/layer_config.dart';
 
 class PlayerLabLayer {
   PlayerLabImage? image;
+  late List<ControlValueType> controls;
   List<Point>? path;
   Offset? location = Offset.zero;
   double? zoom = 1.0;
@@ -14,7 +16,7 @@ class PlayerLabLayer {
 
   double zoomStart = 0.0;
 
-  PlayerLabLayer({this.image, this.path, this.location});
+  PlayerLabLayer({this.image, this.path, this.location, required this.controls});
 
   @override
   String toString() {
