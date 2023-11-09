@@ -4,7 +4,17 @@ class LayerConfig{
   late List<ControlValueType> controls;
 }
 
+enum ControlValueTypeName {
+  None,
+  ControlValueTypeBoolean,
+  ControlValueIntRange,
+  ControlValueDoubleRange,
+  ControlValueColorBrush,
+  ControlValueChoices
+}
+
 abstract class ControlValueType<T> {
+  ControlValueTypeName get type;
   String get label;
   set label (String label);
   T get value;
@@ -33,6 +43,8 @@ class ControlValueBoolean extends ControlValueType<bool>{
   String toString(){
     return "ControlValueBoolean ($value)";
   }
+
+  ControlValueTypeName get type => ControlValueTypeName.ControlValueTypeBoolean;
 }
 
 class ControlValueIntRange extends ControlValueType<int>{
@@ -59,6 +71,9 @@ class ControlValueIntRange extends ControlValueType<int>{
   String toString(){
     return "ControlValueIntRange ($value, max:$max, min:$min)";
   }
+
+  @override
+  ControlValueTypeName get type => ControlValueTypeName.ControlValueIntRange;
 }
 
 class ControlValueDoubleRange extends ControlValueType<double>{
@@ -85,6 +100,9 @@ class ControlValueDoubleRange extends ControlValueType<double>{
   String toString(){
     return "ControlValueDoubleRange ($value, max:$max, min:$min)";
   }
+
+  @override
+  ControlValueTypeName get type => ControlValueTypeName.ControlValueDoubleRange;
 }
 
 class ControlValueColorBrush extends ControlValueType<Color>{
@@ -105,6 +123,9 @@ class ControlValueColorBrush extends ControlValueType<Color>{
   String toString(){
     return "ControlValueBrush ($value)";
   }
+
+  @override
+  ControlValueTypeName get type => ControlValueTypeName.ControlValueColorBrush;
 }
 
 class ControlValueChoices extends ControlValueType<String>{
@@ -130,5 +151,8 @@ class ControlValueChoices extends ControlValueType<String>{
   String toString(){
     return "ControlValueChoices ($value, choices:${choices.join(",")})";
   }
+
+  @override
+  ControlValueTypeName get type => ControlValueTypeName.ControlValueChoices;
 }
 

@@ -25,7 +25,15 @@ class _ControlValueSliderState extends State<ControlValueSlider> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(widget.controlValue.label, style: TextStyle(color: Colors.white, fontSize: 14),),
+        Container(
+          width: 75,
+          child: Column(
+            children: [
+              Text("${widget.controlValue.label}", style: TextStyle(color: Colors.white, fontSize: 14),),
+              Text("${widget.controlValue.value.toStringAsFixed(2)}", style: TextStyle(color: Colors.white, fontSize: 10),)
+            ],
+          ),
+        ),
         Slider(value: value, min:widget.controlValue.min, max:widget.controlValue.max,  onChanged: (val){
           if(widget.controlValue.isValid(val)){
             widget.controlValue.value = val;
@@ -35,6 +43,7 @@ class _ControlValueSliderState extends State<ControlValueSlider> {
             widget.onChange!();
           }
         }),
+
       ],
     );
   }

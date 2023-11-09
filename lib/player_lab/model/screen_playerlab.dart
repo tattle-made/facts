@@ -25,8 +25,8 @@ class _State extends State<ScreenPlayerLab>
   late ArtBoardManager manager;
 
   void loadResources() async {
-    await playerCanvas.loadResources();
-    await targetCanvas.loadResources();
+    // await playerCanvas.loadResources();
+    // await targetCanvas.loadResources();
     setState(() {});
   }
 
@@ -60,19 +60,19 @@ class _State extends State<ScreenPlayerLab>
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 32, 0, 15),
-                child: Text("TARGET IMAGE",
-                    style: GoogleFonts.pressStart2p(
-                        color: Color.fromARGB(255, 178, 43, 42),
-                        textStyle: TextStyle(fontSize: 12.0))),
-              ),
-              Artboard(playerCanvas: targetCanvas, onChange: redraw),
-              Container(
-                height: 12
-              ),
+              // Container(
+              //   margin: EdgeInsets.fromLTRB(0, 32, 0, 15),
+              //   child: Text("TARGET IMAGE",
+              //       style: GoogleFonts.pressStart2p(
+              //           color: Color.fromARGB(255, 178, 43, 42),
+              //           textStyle: TextStyle(fontSize: 12.0))),
+              // ),
+              // Artboard(playerCanvas: targetCanvas, onChange: redraw),
+              // Container(
+              //   height: 12
+              // ),
               GestureDetector(
-                child: Artboard(
+                child: ArtBoard(
                   playerCanvas: playerCanvas,
                   onChange: redraw,
                 ),

@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:facts/player_lab/mask.dart';
 import 'package:facts/player_lab/model/layer.dart';
+import 'package:facts/player_lab/model/layer_config.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,8 @@ class PlayerLabCanvas {
   double zoom = 1.0;
   Offset pan = Offset.zero;
   int selectionIndex = -1;
+  ControlValueTypeName selectedController = ControlValueTypeName.None;
+  Mask brushMask = Mask();
 
   PlayerLabCanvas({this.layers, required this.zoom, required this.pan});
 
@@ -32,7 +36,7 @@ class PlayerLabCanvas {
     for (var i = 0; i < layers!.length; i++) {}
   }
 
-  Future<void> loadResources() async {
+  Future<void> _loadResources() async {
     for (var i = 0; i < layers!.length; i++) {
       var imageData = await rootBundle.load(layers?[i].image?.path ?? "");
       layers?[i].image?.image =
@@ -43,5 +47,18 @@ class PlayerLabCanvas {
         layers?[i].image!.shader = program.fragmentShader();
       }
     }
+  }
+
+  Future<void> _initializeMask() async {
+    await brushMask!.makeWhiteImage();
+  }
+
+  Future<void> initialize() async{
+    await _loadResources();
+    await _initializeMask();
+  }
+
+  Future<void> regenerateMask() async {
+    await brushMask!.makeImageFromPath();
   }
 }

@@ -76,6 +76,14 @@ flutter:
     - shaders/shader_image.frag
     - shaders/shader_whitebalance.frag
     - shaders/shader_translate.frag
+    - shaders/contrast.frag
+    - shaders/whitebalance.frag
+    - shaders/splittone.frag
+    - shaders/saturation.frag
+    - shaders/blur.frag
+    - shaders/levels.frag
+    - shaders/simple_blur.frag
+    - shaders/smear.frag
 
   # To add assets to your application, add an assets section, like this:
   # assets:

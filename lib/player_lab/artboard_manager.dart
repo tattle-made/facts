@@ -1,5 +1,6 @@
 import 'package:facts/player_lab/model/canvas.dart';
 import 'package:facts/player_lab/model/layer.dart';
+import 'package:facts/player_lab/model/layer_config.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/painting.dart';
 
@@ -65,7 +66,11 @@ class ArtBoardManager {
     }
   }
 
-  PlayerLabLayer activeLayer() {
+  onControlChange(ControlValueType controlValue){
+
+  }
+
+  PlayerLabLayer get activeLayer {
     int active = canvas.selectionIndex;
     PlayerLabLayer layer = canvas.layers![active];
     return layer;

@@ -16,7 +16,10 @@ class PlayerLabLayer {
 
   double zoomStart = 0.0;
 
-  PlayerLabLayer({this.image, this.path, this.location, required this.controls});
+  bool? allowZoom = true;
+  bool? allowPan = true;
+
+  PlayerLabLayer({this.image, this.path, this.location, required this.controls, this.allowZoom, this.allowPan});
 
   @override
   String toString() {
@@ -25,11 +28,15 @@ class PlayerLabLayer {
   }
 
   double updateZoom(double newZoom) {
-    if (newZoom > 2.5) {
-      return 2.5;
-    } else if (newZoom < 1.0) {
-      return 1.0;
-    } else {
+    if (allowZoom!){
+      if (newZoom > 2.5) {
+        return 2.5;
+      } else if (newZoom < 1.0) {
+        return 1.0;
+      } else {
+        return newZoom;
+      }
+    }else{
       return newZoom;
     }
   }
