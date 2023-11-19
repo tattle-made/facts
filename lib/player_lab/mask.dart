@@ -48,6 +48,7 @@ class Mask {
     );
     final frameInfo = await codec.getNextFrame();
     imageBrushMask = frameInfo.image;
+    return imageBrushMask;
   }
 
   Future<void> makeWhiteImage() async {
