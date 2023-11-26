@@ -9,8 +9,8 @@ void main() {
     vec2 fragCoord = FlutterFragCoord();
     vec2 st = FlutterFragCoord().xy / u_resolution;
 
-    vec4 color = texture(u_tex0, st).rgba;
+    vec3 color = texture(u_tex0, st).rgb;
 
-    fragColor = color;
+    fragColor = vec4(color, 1.0);
 }
 

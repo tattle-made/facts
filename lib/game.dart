@@ -18,7 +18,7 @@ class Game extends StatelessWidget {
         //   onEvent: () {},
         //   level: level,
         // );
-        return TestLab(level: level, onFinish: (){}, onEvent: (){});
+        return TestLab(level: level, onFinish: () {}, onEvent: () {});
       case ContentType.message:
         return MessageBoard(level: level);
       default:

@@ -6,6 +6,6 @@ class PlayerLabImage {
   String? shaderPath;
   ui.FragmentShader? shader;
 
-
-  PlayerLabImage({this.path, this.image, this.shaderPath});
+  PlayerLabImage(
+      {this.path, this.image, this.shaderPath = "shaders/shader_image.frag"});
 }

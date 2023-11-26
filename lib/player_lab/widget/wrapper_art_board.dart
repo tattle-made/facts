@@ -7,6 +7,10 @@ class WrapperArtBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var width = MediaQuery.of(context).size.width;
+    // var height = 170 / 297 * MediaQuery.of(context).size.width;
+    //
+    // print("real $width, $height");
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 170 / 297 * MediaQuery.of(context).size.width,

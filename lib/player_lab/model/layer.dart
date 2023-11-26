@@ -7,8 +7,8 @@ class PlayerLabLayer {
   PlayerLabImage? image;
   late List<ControlValueType> controls;
   List<Point>? path;
-  Offset? location = Offset.zero;
-  double? zoom = 1.0;
+  Offset location;
+  double zoom;
 
   Offset locationPanStart = Offset.zero;
   Offset panStart = Offset.zero;
@@ -16,10 +16,19 @@ class PlayerLabLayer {
 
   double zoomStart = 0.0;
 
-  bool? allowZoom = true;
-  bool? allowPan = true;
+  bool allowZoom;
+  bool allowPan;
+  bool allowBrush;
 
-  PlayerLabLayer({this.image, this.path, this.location, required this.controls, this.allowZoom, this.allowPan});
+  PlayerLabLayer(
+      {this.image,
+      this.zoom = 1.0,
+      this.path,
+      this.location = Offset.zero,
+      required this.controls,
+      this.allowZoom = true,
+      this.allowPan = true,
+      this.allowBrush = false});
 
   @override
   String toString() {
@@ -28,15 +37,15 @@ class PlayerLabLayer {
   }
 
   double updateZoom(double newZoom) {
-    if (allowZoom!){
+    if (allowZoom!) {
       if (newZoom > 2.5) {
         return 2.5;
-      } else if (newZoom < 1.0) {
-        return 1.0;
+      } else if (newZoom < 0.5) {
+        return 0.5;
       } else {
         return newZoom;
       }
-    }else{
+    } else {
       return newZoom;
     }
   }

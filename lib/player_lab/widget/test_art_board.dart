@@ -11,7 +11,6 @@ import 'package:flutter/widgets.dart';
 
 import '../mask.dart';
 
-
 class TestArtBoard extends StatefulWidget {
   late PlayerLabCanvas canvas;
   Function? onChange;
@@ -25,19 +24,16 @@ class TestArtBoard extends StatefulWidget {
 class _TestArtBoardState extends State<TestArtBoard> {
   late ArtBoardManager canvasGestureInteractionManager;
   late PlayerLabCanvas canvas;
-  late Mask imageMask;
   bool showArtBoard = false;
-  int selection = 1; // 1 is brush 0 is no brush;
 
   void loadResources() async {
     await canvas.initialize();
-    imageMask = canvas.brushMask;
     setState(() {
       showArtBoard = true;
     });
   }
 
-  void changeControl(){
+  void changeControl() {
     print('change control');
     widget.onChange!();
   }
@@ -51,82 +47,82 @@ class _TestArtBoardState extends State<TestArtBoard> {
     loadResources();
   }
 
-  void redraw(){
+  void redraw() {
     setState(() {});
   }
 
-  Future<void> _regenerateMask() async{
-    canvas.brushMask.makeImageFromPath();
-    setState(() {});
+  Future<void> _regenerateMask() async {
+    await canvas.brushMask.makeImageFromPath();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (showArtBoard){
+    if (showArtBoard) {
       return Column(
         children: [
           GestureDetector(
             child: WrapperArtBoard(
-                child: CustomPaint( painter: LayerCompositor(playerLab: canvas, imageMask: canvas.brushMask.imageBrushMask))
-            ),
+                child:
+                    CustomPaint(painter: LayerCompositor(playerLab: canvas))),
             onScaleStart: (details) {
               // print(details.pointerCount);
 
-              if(details.pointerCount==1){
-                if(selection==1){
+              if (details.pointerCount == 1) {
+                if (canvas.allowBrush()) {
                   print("initialize brush path");
                   canvas.brushMask.drawnPath.initializeNewPath();
-                  canvas.brushMask.drawnPath.setDimension(MediaQuery.of(context).size.width.floor(), (170 / 297 * MediaQuery.of(context).size.width).floor());
-                }else{
+                  canvas.brushMask.drawnPath.setDimension(
+                      MediaQuery.of(context).size.width.floor(),
+                      (170 / 297 * MediaQuery.of(context).size.width).floor());
+                } else {
                   print("undefined 1");
-
+                  canvasGestureInteractionManager.onScaleStart(details);
                 }
                 // this is a brush stroke
-
-              }else{
+              } else {
                 canvasGestureInteractionManager.onScaleStart(details);
               }
 
               widget.onChange!();
               redraw();
               print("on scale start");
-
             },
-            onScaleUpdate: (details) {
+            onScaleUpdate: (details) async {
               // print(details.pointerCount);
-              if(details.pointerCount==1){
-                if(selection==1){
+              print("on scale update");
+              if (details.pointerCount == 1) {
+                if (canvas.allowBrush()) {
                   print("draw with brush");
                   canvas.brushMask.drawnPath.addToLast(details.localFocalPoint);
-                  _regenerateMask();
-                }else{
+                  await _regenerateMask();
+                } else {
                   print("pan image instead");
+                  canvasGestureInteractionManager.onScaleUpdate(details);
                 }
-                // add to path
-                //   paths.addToLast(details.localPosition);
-                //   _regenerateImage();
-              }else{
+              } else {
                 canvasGestureInteractionManager.onScaleUpdate(details);
               }
-              print("on scale update");
-
               widget.onChange!();
               redraw();
             },
             onScaleEnd: (details) {
               // print(details.pointerCount);
-              if(details.pointerCount==1){
-                if(selection==1){
+              if (details.pointerCount == 1) {
+                if (canvas.allowBrush()) {
                   print("end brush");
-                }else{
+                } else {
                   print("undefined state 2   ");
+                  canvasGestureInteractionManager.onScaleEnd(details);
                 }
-              }else{
+              } else {
                 canvasGestureInteractionManager.onScaleEnd(details);
                 // redraw();
               }
               print("on scale end");
-
+              var paths = canvas.brushMask.drawnPath.paths;
+              for (var path in paths) {
+                print(path);
+              }
               widget.onChange!();
               redraw();
             },
@@ -138,12 +134,12 @@ class _TestArtBoardState extends State<TestArtBoard> {
             },
           ),
           LayerControls(
-              controls: widget.canvas.layers![widget.canvas.selectionIndex].controls,
-              onChange: changeControl
-          )
+              controls:
+                  widget.canvas.layers![widget.canvas.selectionIndex].controls,
+              onChange: changeControl)
         ],
       );
-    }else {
+    } else {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -151,13 +147,12 @@ class _TestArtBoardState extends State<TestArtBoard> {
           Container(
             height: 8,
           ),
-          Text("Preparing Laboratory", style: TextStyle(color: Colors.white, fontSize: 24),)
+          Text(
+            "Preparing Laboratory",
+            style: TextStyle(color: Colors.white, fontSize: 24),
+          )
         ],
       );
     }
   }
 }
-
-
-
-

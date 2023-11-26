@@ -66,9 +66,7 @@ class ArtBoardManager {
     }
   }
 
-  onControlChange(ControlValueType controlValue){
-
-  }
+  onControlChange(ControlValueType controlValue) {}
 
   PlayerLabLayer get activeLayer {
     int active = canvas.selectionIndex;

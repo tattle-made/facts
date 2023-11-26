@@ -41,6 +41,7 @@ dependencies:
   http: ^1.1.0
   universal_html: ^2.2.4
   fk_user_agent: ^2.1.0
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,7 @@ flutter:
     - shaders/levels.frag
     - shaders/simple_blur.frag
     - shaders/smear.frag
+    - shaders/flip.frag
 
   # To add assets to your application, add an assets section, like this:
   # assets:

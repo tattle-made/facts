@@ -42,8 +42,9 @@ class PlayerLabCanvas {
       layers?[i].image?.image =
           await decodeImageFromList(imageData.buffer.asUint8List());
 
-      if(layers?[i].image!.shaderPath!=null){
-        var program = await FragmentProgram.fromAsset(layers?[i].image!.shaderPath ?? "shaders/shader_image.frag");
+      if (layers?[i].image!.shaderPath != null) {
+        var program = await FragmentProgram.fromAsset(
+            layers?[i].image!.shaderPath ?? "shaders/shader_image.frag");
         layers?[i].image!.shader = program.fragmentShader();
       }
     }
@@ -53,12 +54,23 @@ class PlayerLabCanvas {
     await brushMask!.makeWhiteImage();
   }
 
-  Future<void> initialize() async{
+  Future<void> initialize() async {
     await _loadResources();
     await _initializeMask();
   }
 
   Future<void> regenerateMask() async {
     await brushMask!.makeImageFromPath();
+  }
+
+  bool allowBrush() {
+    bool? val = layers?[selectionIndex].allowBrush;
+    bool safeVal;
+    if (val != null) {
+      safeVal = val;
+    } else {
+      safeVal = false;
+    }
+    return safeVal;
   }
 }
