@@ -1,5 +1,7 @@
 import 'package:facts/atoms/button.dart';
 import 'package:facts/atoms/heading.dart';
+import 'package:facts/atoms/theme.dart';
+import 'package:facts/atoms/typography.dart';
 import 'package:facts/message_board/model/Message.dart';
 import 'package:facts/message_board/widget/sender_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,43 +57,40 @@ class _State extends State<AnimatedMessage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-      // Row(children: [
-      //   Button(
-      //       label: "<",
-      //       onClick: () {
-      //         _reset();
-      //       }),
-      //   Button(
-      //       label: ">",
-      //       onClick: () {
-      //         _start();
-      //       }),
-      // ]),
       AnimatedBuilder(
           animation: _typingAnimationController,
           builder: (context, child) {
-            // return Heading(_typingAnimation.value.toString());
-            return Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      SenderIcon(sender: widget.message.sender),
-                      Container(
-                        child: SenderLabel(widget.message.sender),
-                        margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 18,
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Heading(widget.message.text!
-                          .substring(0, (_typingAnimation.value).floor())))
-                ]);
-            // return Heading("hi");
+            return Container(
+              padding: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Row(
+                  children: [
+                    SenderIcon(sender: widget.message.sender),
+                    Container(
+                      child: SenderLabel(widget.message.sender),
+                      margin: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 18,
+                ),
+                widget.message.imagePath == null
+                    ? Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Heading2Black(widget.message.text!
+                            .substring(0, (_typingAnimation.value).floor())))
+                    : Container(),
+                widget.message.imagePath != null
+                    ? Image.asset(
+                        widget.message.imagePath ?? "assets/size_03.png")
+                    : Container()
+              ]),
+            );
           })
     ]);
   }

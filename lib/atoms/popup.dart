@@ -1,4 +1,5 @@
 import 'package:facts/atoms/button.dart';
+import 'package:facts/game/model/message_popup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 class Popup extends StatefulWidget {
   bool show;
   Function onClose;
-  Popup({Key? key, required this.show, required this.onClose})
+  MessagePopupScreen message;
+  Popup(
+      {Key? key,
+      required this.show,
+      required this.onClose,
+      required this.message})
       : super(key: key);
 
   @override
@@ -49,7 +55,8 @@ class _PopupState extends State<Popup> with TickerProviderStateMixin {
       ..reverse();
 
     _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
+      print(status);
+      if (status == AnimationStatus.dismissed) {
         widget.onClose();
       }
     });
@@ -61,7 +68,7 @@ class _PopupState extends State<Popup> with TickerProviderStateMixin {
         animation: _controller,
         builder: (context, child) {
           var height = MediaQuery.of(context).size.height;
-          var top = 20 + height * _animatedLocation.value; // 0 to 1
+          var top = 80 + height * _animatedLocation.value; // 0 to 1
           return Positioned(
               left: 40,
               top: top,
@@ -78,7 +85,7 @@ class _PopupState extends State<Popup> with TickerProviderStateMixin {
                           child: Column(
                             children: [
                               Text(
-                                "Well Done!",
+                                widget.message.title,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.pressStart2p(
                                     textStyle: TextStyle(
@@ -90,7 +97,7 @@ class _PopupState extends State<Popup> with TickerProviderStateMixin {
                               Container(
                                 margin: EdgeInsets.all(16),
                                 child: Text(
-                                  "This was great. We've seem to have stopped the spread for now. Lets get back to the message board.",
+                                  widget.message.message,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.pressStart2p(
                                       textStyle: TextStyle(
@@ -101,7 +108,7 @@ class _PopupState extends State<Popup> with TickerProviderStateMixin {
                           )),
                       Container(
                         margin: EdgeInsets.all(20),
-                        child: Button(
+                        child: SimpleButton(
                             label: "    OK    ",
                             onClick: () {
                               _hide();

@@ -1,15 +1,21 @@
 import 'dart:ui';
 
+import 'package:facts/atoms/button.dart';
 import 'package:facts/atoms/heading.dart';
 import 'package:facts/atoms/paragraph.dart';
 import 'package:facts/episode_food_vlogger_puzzles.dart';
 import 'package:facts/image_forensic_slider.dart';
+import 'package:facts/player_lab/model/canvas.dart';
+import 'package:facts/player_lab/model/image.dart';
+import 'package:facts/player_lab/model/layer.dart';
+import 'package:facts/player_lab/model/layer_config.dart';
+import 'package:facts/player_lab/widget/test_art_board.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LessonFoodVlogger extends StatefulWidget {
+class PageLessonImageManipulation extends StatefulWidget {
   final Function? onFinish;
-  const LessonFoodVlogger({super.key, this.onFinish});
+  const PageLessonImageManipulation({super.key, this.onFinish});
 
   @override
   State<StatefulWidget> createState() {
@@ -17,20 +23,24 @@ class LessonFoodVlogger extends StatefulWidget {
   }
 }
 
-class _EpisodeState extends State<LessonFoodVlogger> {
+class _EpisodeState extends State<PageLessonImageManipulation> {
+  void redraw() {
+    setState() {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 201, 203, 163),
       padding: const EdgeInsets.all(12.0),
-      child: _Lesson(onFinish: widget.onFinish),
+      child: _Lesson(onFinish: widget.onFinish, redraw: redraw),
     );
   }
 }
 
 class _Lesson extends StatelessWidget {
   final Function? onFinish;
-  const _Lesson({super.key, this.onFinish});
+  Function redraw;
+  _Lesson({super.key, this.onFinish, required this.redraw});
 
   @override
   Widget build(BuildContext context) {
@@ -62,32 +72,58 @@ class _Lesson extends StatelessWidget {
         ),
         Paragraph(
             "\nThese digital manipulation techniques can sometimes be used to spread misinformation. For a media literate person, it is important to distinguish between the objective description and the subjective interpretation of a photo. Thankfully, these same tools and techniques can be used to investigate image manipulation. \n"),
+        // Paragraph(
+        //     "\nYour name is \"Agent Eye\". Your goal is to become a detective and solve controversies on social media. Through this training module, you will learn new skills. \n"),
+        Heading("Translation"),
         Paragraph(
-            "\nYour name is \"Agent Eye\". Your goal is to become a detective and solve controversies on social media. Through this training module, you will learn new skills. \n"),
-        GestureDetector(
-            onTap: () {
+            "Click and drag the apple to move it to the center of the canvas. You can Pinch-Zoom with both fingers to increase or decrease the size of the apple"),
+        Container(height: 12),
+        TestArtBoard(
+          canvas: PlayerLabCanvas(layers: [
+            PlayerLabLayer(
+              image: PlayerLabImage(
+                  path: 'assets/t1l1.png',
+                  shaderPath: "shaders/shader_image.frag"),
+              location: const Offset(0, 0),
+              controls: [],
+            ),
+            PlayerLabLayer(
+              image: PlayerLabImage(
+                  path: 'assets/t1l2.png',
+                  shaderPath: "shaders/shader_image.frag"),
+              location: const Offset(0, 0),
+              controls: [],
+            ),
+          ], zoom: 1.0, pan: const Offset(0, 0)),
+          onChange: redraw,
+        ),
+        Container(height: 12),
+        Heading("Contrast"),
+        Paragraph(
+            "You can click on some objects on your canvas to reveal additional manipulations you can perform on the image"),
+        Container(height: 12),
+        Container(
+          padding: EdgeInsets.all(4),
+          child: TestArtBoard(
+              canvas: PlayerLabCanvas(layers: [
+                PlayerLabLayer(
+                    image: PlayerLabImage(
+                        path: 'assets/p2l1.png',
+                        shaderPath: "shaders/contrast.frag"),
+                    location: const Offset(0, 0),
+                    controls: [
+                      ControlValueDoubleRange(
+                          value: 1, min: -20, max: 5, label: 'Contrast')
+                    ]),
+              ], zoom: 1.0, pan: const Offset(0, 0)),
+              onChange: redraw),
+        ),
+        Container(height: 24),
+        AccentButton(
+            label: "Done",
+            onClick: () {
               onFinish?.call();
-            },
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              margin: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 225, 168),
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 255, 0, 0), width: 2),
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0))),
-              child: const Row(
-                children: [
-                  const Icon(
-                    Icons.play_arrow_outlined,
-                    color: Color.fromARGB(255, 114, 61, 70),
-                    size: 48.0,
-                    semanticLabel: 'Draw Rectangle',
-                  ),
-                  const Text("Ok")
-                ],
-              ),
-            )),
+            }),
         const SizedBox(
           height: 100,
           width: 20,

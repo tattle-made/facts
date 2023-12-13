@@ -5,7 +5,8 @@ import '../model/layer_config.dart';
 class ControlValueSlider extends StatefulWidget {
   ControlValueDoubleRange controlValue;
   Function? onChange;
-  ControlValueSlider({super.key, required this.controlValue, required this.onChange});
+  ControlValueSlider(
+      {super.key, required this.controlValue, required this.onChange});
 
   @override
   State<ControlValueSlider> createState() => _ControlValueSliderState();
@@ -29,21 +30,27 @@ class _ControlValueSliderState extends State<ControlValueSlider> {
           width: 75,
           child: Column(
             children: [
-              Text("${widget.controlValue.label}", style: TextStyle(color: Colors.white, fontSize: 14),),
-              Text("${widget.controlValue.value.toStringAsFixed(2)}", style: TextStyle(color: Colors.white, fontSize: 10),)
+              Text(
+                "${widget.controlValue.label}",
+                style: TextStyle(color: Colors.white, fontSize: 14),
+              ),
+              // Text("${widget.controlValue.value.toStringAsFixed(2)}", style: TextStyle(color: Colors.white, fontSize: 10),)
             ],
           ),
         ),
-        Slider(value: value, min:widget.controlValue.min, max:widget.controlValue.max,  onChanged: (val){
-          if(widget.controlValue.isValid(val)){
-            widget.controlValue.value = val;
-            setState(() {
-              value = val;
-            });
-            widget.onChange!();
-          }
-        }),
-
+        Slider(
+            value: value,
+            min: widget.controlValue.min,
+            max: widget.controlValue.max,
+            onChanged: (val) {
+              if (widget.controlValue.isValid(val)) {
+                widget.controlValue.value = val;
+                setState(() {
+                  value = val;
+                });
+                widget.onChange!();
+              }
+            }),
       ],
     );
   }

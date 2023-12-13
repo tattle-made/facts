@@ -1,3 +1,5 @@
+import 'package:facts/atoms/theme.dart';
+import 'package:facts/atoms/typography.dart';
 import 'package:flutter/material.dart';
 
 Widget Button({label, onClick}) {
@@ -38,11 +40,44 @@ Widget AccentButton({label, onClick}) {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           color: Color.fromARGB(255, 238, 204, 0)),
-      child: Text(label,
-          style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 16.0,
-              color: Color.fromARGB(255, 42, 20, 27))),
+      child: AccentButtonText(label),
+    ),
+  );
+}
+
+Widget AccentButtonFullWidth({label, onClick}) {
+  return GestureDetector(
+    onTap: () {
+      onClick();
+    },
+    child: SizedBox(
+      width: double.infinity,
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: secondary,
+            ),
+            color: Color.fromARGB(255, 238, 204, 0)),
+        child: AccentButtonText(label),
+      ),
+    ),
+  );
+}
+
+Widget SimpleButton({label, onClick}) {
+  return GestureDetector(
+    onTap: () {
+      onClick();
+    },
+    child: Container(
+      padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32), color: primary),
+      child: SimpleButtonText(label),
     ),
   );
 }

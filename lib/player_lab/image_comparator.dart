@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:facts/player_lab/model/canvas.dart';
+import 'package:facts/player_lab/model/comparator.dart';
 import 'package:facts/player_lab/model/layer.dart';
 import 'package:facts/player_lab/widget/layer_compositor.dart';
 import 'package:image_compare/image_compare.dart';
@@ -10,7 +11,7 @@ import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
 
 Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
-    PlayerLabCanvas artboard, Function onChange) async {
+    PlayerLabCanvas artboard, Function onChange, Comparator? comparator) async {
   // var targetImageData = await rootBundle.load(targetImage);
   //
   // var tmpImage = "http://localhost:9000/p1_target.png";
@@ -58,11 +59,13 @@ Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
   var result = await compareImages(
       src1: uInt8ListViewOverB,
       src2: uInt8ListViewOverB2,
-      algorithm: PixelMatching());
+      algorithm: comparator!.matchAlgorithm);
 
+  print("comparator : ${comparator.match}, ${comparator.threshold}");
   print("result : $result");
 
-  onChange(saveFile);
+  // onChange(saveFile);
+  // onChange(result);
 
   return true;
 }

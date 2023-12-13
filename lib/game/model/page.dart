@@ -1,0 +1,1 @@
+enum Page { HOME, GAME, LESSON, ABOUT, END }

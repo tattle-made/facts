@@ -1,4 +1,5 @@
 import 'package:facts/atoms/button.dart';
+import 'package:facts/atoms/typography.dart';
 import 'package:facts/message_board/model/Message.dart';
 import 'package:facts/message_board/widget/animated_message.dart';
 import 'package:facts/router_level.dart';
@@ -17,12 +18,16 @@ class MessageBoard extends StatefulWidget {
 class _MessageBoardState extends State<MessageBoard> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        AnimatedMessage(
-            message: widget.level.content.messages![widget.level.contentIndex],
-            key: ValueKey(widget.level.contentIndex)),
-      ],
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 24, 0, 0),
+      child: ListView(
+        children: [
+          AnimatedMessage(
+              message:
+                  widget.level.content.messages![widget.level.contentIndex],
+              key: ValueKey(widget.level.contentIndex)),
+        ],
+      ),
     );
   }
 }

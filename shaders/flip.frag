@@ -3,14 +3,18 @@
 out vec4 fragColor;
 uniform vec2 u_resolution;
 uniform sampler2D u_tex0;
+uniform float flip;
 
 
 void main() {
     vec2 fragCoord = FlutterFragCoord();
     vec2 st = FlutterFragCoord().xy / u_resolution;
 
-    vec3 color = texture(u_tex0, st).rgb;
+    float t = smoothstep(0.0, flip, st.x);
 
-    fragColor = vec4(color, 1.0);
+    vec4 color = texture(u_tex0, st-t).rgba;
+
+    fragColor = color;
+
 }
 

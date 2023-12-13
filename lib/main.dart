@@ -1,34 +1,30 @@
 import 'dart:ui';
 
-import 'package:facts/SplashScreen.dart';
+import 'package:facts/page_about.dart';
 import 'package:facts/app_factory.dart';
 import 'package:facts/atoms/popup.dart';
-import 'package:facts/player_lab/model/screen_playerlab.dart';
-import 'package:facts/atoms/blinking_text.dart';
+import 'package:facts/atoms/show_if.dart';
+import 'package:facts/atoms/typography.dart';
+import 'package:facts/game/model/message_popup_screen.dart';
 import 'package:facts/atoms/button.dart';
 import 'package:facts/atoms/heading.dart';
-import 'package:facts/atoms/timer.dart';
 import 'package:facts/data/model.dart';
 import 'package:facts/game.dart';
-import 'package:facts/message_board/widget/animated_message.dart';
 import 'package:facts/episode_food_vlogger_intro.dart';
-import 'package:facts/lesson_food_vlogger.dart';
-import 'package:facts/episode_food_vlogger_carousel.dart';
-import 'package:facts/episode_food_vlogger_puzzles.dart';
+import 'package:facts/game/model/page.dart' as facts_page;
+import 'package:facts/page_lesson_image_manipulation.dart';
 import 'package:facts/lesson_food_vlogger_end.dart';
 import 'package:facts/manager_audio.dart';
 import 'package:facts/manager_plausible_analytics.dart';
-import 'package:facts/message_board/widget/message_board.dart';
+import 'package:facts/page_home.dart';
 import 'package:facts/puzzle_colorbalance.dart';
 import 'package:facts/puzzle_lens_ela.dart';
 import 'package:facts/puzzle_lens_exposure.dart';
 import 'package:facts/puzzle_pan_and_draw.dart';
-import 'package:facts/puzzle_find_object.dart';
 import 'package:facts/router_level.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,18 +66,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = -1;
+  var currentPage = facts_page.Page.HOME;
   final factory = AppFactory();
   late ManagerAudio audioManager;
   late PlausibleAnalytics analyticsManager;
   late RouterLevel levelRouter;
   late Content content;
   bool showPopup = false;
+  MessagePopupScreen messagePopupScreen = MessagePopupScreen();
+  int score = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  String heading() {
+    String heading;
+    if (currentPage == facts_page.Page.GAME) {
+      heading = levelRouter.pageType == 0
+          ? "facts! > chatroom"
+          : "facts! > laboratory";
+    } else {
+      return "facts!";
+    }
+
+    return heading;
   }
 
   void onLevelFinished(details) {
@@ -97,6 +102,18 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (details == "mute") {
       audioManager.mute();
     }
+  }
+
+  onPageFinished() {
+    setState(() {
+      currentPage = facts_page.Page.HOME;
+    });
+  }
+
+  onPageChangeRequest(facts_page.Page newPage) {
+    setState(() {
+      currentPage = newPage;
+    });
   }
 
   void onEvent(event, payload) {
@@ -117,25 +134,56 @@ class _MyHomePageState extends State<MyHomePage> {
     audioManager.playMain();
   }
 
+  void onImageSubmitted(bool result) {
+    print("image submitted as $result");
+    MessagePopupScreen message;
+    int incr = 0;
+    if (result) {
+      message = levelRouter.content.messageResult.success;
+      incr++;
+    } else {
+      message = levelRouter.content.messageResult.failure;
+    }
+
+    setState(() {
+      messagePopupScreen = message;
+      showPopup = true;
+      score = score + incr;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 42, 20, 27),
-        title: Column(
-          children: [
-            Text(levelRouter.pageType == 0 ? "MESSAGE BOARD" : "REC",
-                style: GoogleFonts.pressStart2p(
-                    color: Color.fromARGB(255, 178, 43, 42),
-                    textStyle: TextStyle(fontSize: 18.0)))
-          ],
+        backgroundColor: Color.fromARGB(255, 178, 43, 42),
+        title: Container(
+          alignment: Alignment.center,
+          child: AppName(heading()),
         ),
       ),
       body: Stack(
         children: [
           Column(
             children: [
+              Column(
+                children: [
+                  ShowIf(
+                      condition: currentPage == facts_page.Page.GAME,
+                      child: Container(
+                        color: Color.fromARGB(255, 178, 43, 42),
+                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Heading2("level:${levelRouter.levelNumber}"),
+                            Heading2("score:${score}")
+                          ],
+                        ),
+                      ))
+                ],
+              ),
               Expanded(
                   child: ColoredBox(
                 color: Color.fromARGB(255, 42, 20, 27),
@@ -146,91 +194,69 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.symmetric(
                       vertical: 4.0, horizontal: 12.0),
                   child: Builder(builder: (context) {
-                    switch (_counter) {
-                      case -1:
-                        // return PageTest(
-                        //     onFinish: onLevelFinished, onEvent: onEvent);
-                        // return MessageBoard(level: widget.level);
+                    switch (currentPage) {
+                      case facts_page.Page.HOME:
+                        return PageHome(
+                          onFinish: onPageFinished,
+                          onChangePage: onPageChangeRequest,
+                        );
+                      case facts_page.Page.LESSON:
+                        return PageLessonImageManipulation(
+                          onFinish: onPageFinished,
+                        );
+                      case facts_page.Page.GAME:
                         return Game(
                           level: levelRouter,
+                          onFinish: onImageSubmitted,
                         );
-                      // return Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     BlinkingText(),
-                      //     Expanded(child: Container()),
-                      //     Timer(
-                      //       key: ValueKey(levelRouter.levelNumber),
-                      //     ),
-                      //   ],
-                      // );
-                      // return PuzzleColorBalance(onPuzzleDone: _incrementCounter);
-                      case 0:
+
+                      case facts_page.Page.ABOUT:
+                        return SplashScreen(
+                          onFinish: onPageFinished,
+                        );
+                      case facts_page.Page.END:
+                        return LessonFoodVloggerEnd(onFinish: onLevelFinished);
+                      default:
                         return SplashScreen(
                           onFinish: onLevelFinished,
                         );
-                      case 1:
-                        return LessonFoodVlogger(onFinish: onLevelFinished);
-                      case 2:
-                        return EpisodeFoodVloggerIntro(
-                            onFinish: onLevelFinished);
-                      case 3:
-                        return PuzzlePandAndDraw(
-                          onPuzzleDone: _incrementCounter,
-                        );
-                      case 4:
-                        return PuzzleLensExposure(
-                          onPuzzleDone: _incrementCounter,
-                        );
-                      case 5:
-                        return PuzzleLensELA(
-                          onPuzzleDone: _incrementCounter,
-                        );
-                      case 6:
-                        return PuzzleColorBalance(
-                            onPuzzleDone: _incrementCounter);
                     }
-                    return LessonFoodVloggerEnd(onFinish: onLevelFinished);
                   }),
                 ),
               )),
-              Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color.fromARGB(255, 109, 20, 20),
-                  ),
-                  height: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(12, 0, 0, 0),
-                        child: Heading("L${levelRouter.levelNumber}"),
+              currentPage == facts_page.Page.GAME &&
+                      levelRouter.content.type == ContentType.message
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 42, 20, 27),
                       ),
-                      Icon(
-                        Icons.remove_red_eye,
-                        size: 80,
-                        color: Colors.redAccent,
-                      ),
-                      AccentButton(
-                          label: "Next",
-                          onClick: () {
-                            // var nextLevel = levelRouter.nextLevel();
-                            setState(() {
-                              // levelRouter = nextLevel;
-                              showPopup = true;
-                            });
-                          }),
-                    ],
-                  ))
+                      height: 80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          levelRouter.content.type == ContentType.message
+                              ? AccentButton(
+                                  label: "next",
+                                  onClick: () {
+                                    print(showPopup);
+                                    levelRouter.nextLevel();
+                                    setState(() {});
+                                  })
+                              : Container(),
+                        ],
+                      ))
+                  : Container()
             ],
           ),
           Popup(
             key: ValueKey(showPopup),
             show: showPopup,
+            message: messagePopupScreen,
             onClose: () {
+              var nextLevel = levelRouter.nextLevel();
               setState(() {
-                print('false');
+                print('false in on close');
+                levelRouter = nextLevel;
                 showPopup = false;
               });
             },
@@ -244,9 +270,9 @@ class _MyHomePageState extends State<MyHomePage> {
 Widget levelSelector(level, onLevelFinished) {
   switch (level) {
     case 0:
-      return LessonFoodVlogger(onFinish: onLevelFinished);
+      return PageLessonImageManipulation(onFinish: onLevelFinished);
     case 1:
       return PuzzlePandAndDraw();
   }
-  return LessonFoodVlogger(onFinish: onLevelFinished);
+  return PageLessonImageManipulation(onFinish: onLevelFinished);
 }

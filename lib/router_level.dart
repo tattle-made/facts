@@ -4,7 +4,7 @@
 import 'package:facts/data/model.dart';
 import 'package:facts/data/data.dart' as contentData;
 
-final LEVEL_COUNT = 5;
+final LEVEL_COUNT = 6;
 final STARTING_PATH = "1.0.0";
 
 class RouterLevel {
@@ -46,6 +46,15 @@ class RouterLevel {
       return IncrementResult(carry: false, newValue: index + 1);
     } else {
       return IncrementResult(carry: true, newValue: 0);
+    }
+  }
+
+  void computeResult() {
+    // detect if its a ContentType.lab
+    if (this.content.type == ContentType.lab) {
+      print("we are a lab type");
+      //get comparator
+      // var comparator = content.comparator
     }
   }
 

@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'package:facts/atoms/button.dart';
 import 'package:facts/atoms/heading.dart';
 import 'package:facts/atoms/paragraph.dart';
+import 'package:facts/atoms/theme.dart';
+import 'package:facts/atoms/typography.dart';
 import 'package:facts/episode_food_vlogger_puzzles.dart';
 import 'package:facts/image_forensic_slider.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +24,6 @@ class _EpisodeState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 201, 203, 163),
       padding: const EdgeInsets.all(12.0),
       child: _Lesson(onFinish: widget.onFinish),
     );
@@ -36,35 +38,24 @@ class _Lesson extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Heading("Factual Accuracy Checking Tutorials"),
-        Paragraph(
-            "An interactive tutorial about media literacy built by Tattle \n"),
-        Paragraph("Supported By : "),
-        Image.asset('assets/support.png'),
-        GestureDetector(
-            onTap: () {
+        Heading1PrimaryFontWhite(
+            "Factual Accuracy Checking Tutorials by Tattle"),
+        Container(height: 24),
+        HeadingAlt2White("Games to sharpen your Media Literacy skills. \n"),
+        Container(height: 32),
+        Heading2PrimaryFontWhite("Supported By : "),
+        Container(
+          color: white,
+          padding: EdgeInsets.all(12),
+          margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+          child: Image.asset('assets/support.png'),
+        ),
+        Container(height: 64),
+        SimpleButton(
+            label: "Home",
+            onClick: () {
               onFinish?.call();
-            },
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              margin: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 225, 168),
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 255, 0, 0), width: 2),
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0))),
-              child: const Row(
-                children: [
-                  const Icon(
-                    Icons.play_arrow_outlined,
-                    color: Color.fromARGB(255, 114, 61, 70),
-                    size: 48.0,
-                    semanticLabel: 'Draw Rectangle',
-                  ),
-                  const Text("Explore")
-                ],
-              ),
-            )),
+            }),
         const SizedBox(
           height: 100,
           width: 20,

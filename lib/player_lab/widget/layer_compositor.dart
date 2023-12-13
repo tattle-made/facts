@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:facts/atoms/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../model/canvas.dart';
@@ -31,16 +32,18 @@ void draw(
         }
       }
       image.shader?.setImageSampler(0, image!.image!);
-      // image.shader?.setImageSampler(1, imageMask);
+      if (playerLab.usesBrush) {
+        image.shader?.setImageSampler(1, imageMask);
+      }
       paint.shader = image!.shader;
 
       canvas.drawRect(Offset.zero & Size(width, height), paint);
 
-      // draw selection bound
+      //draw selection bound
       // if (i == playerLab!.selectionIndex) {
       //   var selectionPaint = Paint();
-      //   selectionPaint.color = Colors.green;
-      //   selectionPaint.strokeWidth = 2;
+      //   selectionPaint.color = primary;
+      //   selectionPaint.strokeWidth = 4;
       //   selectionPaint.style = PaintingStyle.stroke;
       //   canvas.drawRect(Offset.zero & Size(width, height), selectionPaint);
       // }

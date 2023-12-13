@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:facts/atoms/blinking_text.dart';
 import 'package:facts/atoms/button.dart';
+import 'package:facts/atoms/heading.dart';
+import 'package:facts/atoms/timer.dart';
 import 'package:facts/player_lab/artboard_manager.dart';
 import 'package:facts/player_lab/image_comparator.dart';
 import 'package:facts/player_lab/model/canvas.dart';
@@ -23,7 +26,8 @@ class TestLab extends StatefulWidget {
 class _State extends State<TestLab> {
   late PlayerLabCanvas playerCanvas;
   late PlayerLabCanvas targetCanvas;
-  File? previewFile;
+  // File? previewFile;
+  double score = 0.0;
 
   @override
   void initState() {
@@ -36,9 +40,10 @@ class _State extends State<TestLab> {
   @override
   void dispose() {}
 
-  void onChange(File newFile) {
+  void onChange(double result) {
     setState(() {
-      previewFile = newFile;
+      // previewFile = newFile;
+      score = result;
     });
   }
 
@@ -49,33 +54,59 @@ class _State extends State<TestLab> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TestArtBoard(
-          canvas: targetCanvas,
-          onChange: redraw,
-        ),
+        Expanded(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                BlinkingText(),
+                Expanded(child: Container()),
+                Timer(
+                  key: ValueKey(widget.level.levelNumber),
+                ),
+              ],
+            ),
+            Container(
+              child: CanvasLabel("TARGET IMAGE"),
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
+            ),
+            TestArtBoard(
+              canvas: targetCanvas,
+              onChange: redraw,
+            ),
+
+            Container(
+              child: CanvasLabel("YOUR CANVAS"),
+              margin: EdgeInsets.fromLTRB(0, 12, 0, 8),
+            ),
+            TestArtBoard(
+              canvas: playerCanvas,
+              onChange: redraw,
+            ),
+
+            // if (previewFile != null) Image.file(previewFile!)
+            // Text(
+            //   "score $score",
+            //   style: TextStyle(color: Color.fromARGB(255, 255, 255, 123)),
+            // )
+          ],
+        )),
         Container(
-          height: 40,
-        ),
-        TestArtBoard(
-          canvas: playerCanvas,
-          onChange: redraw,
-        ),
-        Button(
-            label: "test",
-            onClick: () async {
-              // compare(targetImage, w, h, artboard)
-              var width = MediaQuery.of(context).size.width;
-              var height = 170 / 297 * MediaQuery.of(context).size.width;
-              // print("testing $width, $height");
-              // print(playerCanvas);
-              // print(targetCanvas);
-              await compare(
-                  targetCanvas, width, height, playerCanvas, onChange);
-            }),
-        if (previewFile != null) Image.file(previewFile!)
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+          alignment: Alignment.bottomRight,
+          child: AccentButton(
+              label: "Submit",
+              onClick: () async {
+                var width = MediaQuery.of(context).size.width;
+                var height = 170 / 297 * MediaQuery.of(context).size.width;
+                bool result = await compare(targetCanvas, width, height,
+                    playerCanvas, onChange, widget.level.content.comparator);
+                widget.onFinish!(result);
+              }),
+        )
       ],
     );
   }

@@ -7,7 +7,9 @@ import 'package:flutter/widgets.dart';
 
 class Game extends StatelessWidget {
   RouterLevel level;
-  Game({Key? key, required this.level}) : super(key: key);
+  Function onFinish;
+  Game({Key? key, required this.level, required this.onFinish})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class Game extends StatelessWidget {
         //   onEvent: () {},
         //   level: level,
         // );
-        return TestLab(level: level, onFinish: () {}, onEvent: () {});
+        return TestLab(level: level, onFinish: onFinish, onEvent: () {});
       case ContentType.message:
         return MessageBoard(level: level);
       default:

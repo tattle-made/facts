@@ -5,6 +5,7 @@ import 'package:facts/player_lab/widget/drawn_path.dart';
 class Mask {
   late ui.Image imageBrushMask;
   var drawnPath = DrawnPath();
+  bool isInitialized = false;
 
   Future<void> makeImageFromPath() async {
     var paths = drawnPath.paths;
@@ -33,7 +34,7 @@ class Mask {
         final offset =
             ((y.toInt()) * width + (x.toInt())).clamp(0, width * height - 2) *
                 bytesPerPixel;
-        buffer[offset] = 0;
+        buffer[offset] -= 50;
       }
     }
 
@@ -50,6 +51,8 @@ class Mask {
     );
     final frameInfo = await codec.getNextFrame();
     imageBrushMask = frameInfo.image;
+
+    isInitialized = true;
   }
 
   Future<void> makeWhiteImage() async {
@@ -59,17 +62,10 @@ class Mask {
     final buffer = Uint8List(width * height * bytesPerPixel);
     for (int y = 0; y < width; y++) {
       for (int x = 0; x < height; x++) {
-        if (x == y) {
-          final offset = ((y * width) + x) * bytesPerPixel;
-          buffer[offset] = 0;
-          buffer[offset + 1] = 0;
-          buffer[offset + 2] = 0;
-        } else {
-          final offset = ((y * width) + x) * bytesPerPixel;
-          buffer[offset] = 255;
-          buffer[offset + 1] = 255;
-          buffer[offset + 2] = 255;
-        }
+        final offset = ((y * width) + x) * bytesPerPixel;
+        buffer[offset] = 255;
+        buffer[offset + 1] = 255;
+        buffer[offset + 2] = 255;
       }
     }
     final immutable = await ui.ImmutableBuffer.fromUint8List(buffer);
@@ -85,5 +81,7 @@ class Mask {
     );
     final frameInfo = await codec.getNextFrame();
     imageBrushMask = frameInfo.image;
+
+    isInitialized = true;
   }
 }

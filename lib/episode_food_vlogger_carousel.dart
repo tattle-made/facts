@@ -1,4 +1,4 @@
-import 'package:facts/lesson_food_vlogger.dart';
+import 'package:facts/page_lesson_image_manipulation.dart';
 import 'package:facts/episode_food_vlogger_puzzles.dart';
 import 'package:facts/image_forensic_slider.dart';
 import 'package:flutter/cupertino.dart';

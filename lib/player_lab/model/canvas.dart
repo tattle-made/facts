@@ -13,14 +13,19 @@ class PlayerLabCanvas {
   int selectionIndex = -1;
   ControlValueTypeName selectedController = ControlValueTypeName.None;
   Mask brushMask = Mask();
+  bool usesBrush;
 
-  PlayerLabCanvas({this.layers, required this.zoom, required this.pan});
+  PlayerLabCanvas(
+      {this.layers,
+      required this.zoom,
+      required this.pan,
+      this.usesBrush = false});
 
   double updateZoom(double newZoom) {
-    if (newZoom > 2.5) {
-      return 2.5;
-    } else if (newZoom < 1.0) {
-      return 1.0;
+    if (newZoom > 5.5) {
+      return 5.5;
+    } else if (newZoom < -1.0) {
+      return -1.0;
     } else {
       return newZoom;
     }

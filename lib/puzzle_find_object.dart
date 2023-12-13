@@ -1,4 +1,4 @@
-import 'package:facts/lesson_food_vlogger.dart';
+import 'package:facts/page_lesson_image_manipulation.dart';
 import 'package:facts/puzzle_pan_and_draw.dart';
 import 'package:facts/image_forensic_slider.dart';
 import 'package:flutter/material.dart';

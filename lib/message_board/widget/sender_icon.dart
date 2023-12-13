@@ -10,10 +10,10 @@ class SenderIcon extends StatelessWidget {
         return "assets/dp_02.png";
       case "boss":
         return "assets/dp_03.png";
-      case "hinter":
-        return "assets/dp_01.png";
+      case "detective":
+        return "assets/dp_04.png";
       default:
-        return "assets/dp_03.png";
+        return "assets/dp_01.png";
     }
   }
 
