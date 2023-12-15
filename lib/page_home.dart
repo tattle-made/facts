@@ -21,13 +21,13 @@ class PageHome extends StatelessWidget {
             "An interactive resource to sharpen your critical thinking and media literacy skills"),
         Container(height: 32),
         AccentButtonFullWidth(
-            label: "Lesson on Image Manipulation",
+            label: "Lesson : Image Manipulation",
             onClick: () {
               onChangePage(facts_page.Page.LESSON);
             }),
         Container(height: 24),
         AccentButtonFullWidth(
-            label: "What killed Masoorie?",
+            label: "Game : What killed Masoorie?",
             onClick: () {
               onChangePage(facts_page.Page.GAME);
             }),
