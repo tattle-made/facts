@@ -26,6 +26,7 @@ class TestLab extends StatefulWidget {
 class _State extends State<TestLab> {
   late PlayerLabCanvas playerCanvas;
   late PlayerLabCanvas targetCanvas;
+  late Function? comparator;
   // File? previewFile;
   double score = 0.0;
 
@@ -34,6 +35,7 @@ class _State extends State<TestLab> {
     super.initState();
     playerCanvas = widget.level.content.labCanvas![0]!;
     targetCanvas = widget.level.content.labCanvas![1]!;
+    comparator = widget.level.content.comparatorV2;
     setState(() {});
   }
 
@@ -99,11 +101,9 @@ class _State extends State<TestLab> {
           alignment: Alignment.bottomRight,
           child: AccentButton(
               label: "Submit",
-              onClick: () async {
-                var width = MediaQuery.of(context).size.width;
-                var height = 170 / 297 * MediaQuery.of(context).size.width;
-                bool result = await compare(targetCanvas, width, height,
-                    playerCanvas, onChange, widget.level.content.comparator);
+              onClick: () {
+                bool result = comparator?.call(playerCanvas, targetCanvas);
+                print("submission result : $result");
                 widget.onFinish!(result);
               }),
         )

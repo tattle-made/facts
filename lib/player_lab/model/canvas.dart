@@ -5,6 +5,7 @@ import 'package:facts/player_lab/model/layer.dart';
 import 'package:facts/player_lab/model/layer_config.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 class PlayerLabCanvas {
   List<PlayerLabLayer>? layers;

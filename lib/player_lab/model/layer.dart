@@ -33,7 +33,7 @@ class PlayerLabLayer {
   @override
   String toString() {
     // return "Location : $location}\nScale2Start: $panStart}, PanDelta:$panDelta";
-    return "Zoom : $zoom, ZoomStart: $zoomStart";
+    return "Zoom : $zoom, ZoomStart: $zoomStart, Location: $location";
   }
 
   double updateZoom(double newZoom) {

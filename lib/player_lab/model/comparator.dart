@@ -6,5 +6,5 @@ class Comparator {
   double threshold;
 
   Comparator(
-      {required this.matchAlgorithm, this.match = 40, this.threshold = 10});
+      {required this.matchAlgorithm, this.match = 0.40, this.threshold = 0.01});
 }

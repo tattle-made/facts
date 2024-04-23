@@ -19,12 +19,13 @@ class Content {
   List<PlayerLabCanvas>? labCanvas;
   Comparator? comparator;
   MessageResult messageResult;
+  Function? comparatorV2;
 
-  Content({
-    required this.type,
-    this.messages,
-    this.labCanvas,
-    this.comparator,
-    required this.messageResult,
-  });
+  Content(
+      {required this.type,
+      this.messages,
+      this.labCanvas,
+      this.comparator,
+      required this.messageResult,
+      this.comparatorV2});
 }

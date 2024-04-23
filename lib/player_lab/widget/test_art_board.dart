@@ -34,7 +34,6 @@ class _TestArtBoardState extends State<TestArtBoard> {
   }
 
   void changeControl() {
-    print('change control');
     widget.onChange!();
   }
 
@@ -69,13 +68,11 @@ class _TestArtBoardState extends State<TestArtBoard> {
 
               if (details.pointerCount == 1) {
                 if (canvas.allowBrush()) {
-                  print("initialize brush path");
                   canvas.brushMask.drawnPath.initializeNewPath();
                   canvas.brushMask.drawnPath.setDimension(
                       MediaQuery.of(context).size.width.floor(),
                       (170 / 297 * MediaQuery.of(context).size.width).floor());
                 } else {
-                  print("undefined 1");
                   canvasGestureInteractionManager.onScaleStart(details);
                 }
                 // this is a brush stroke
@@ -85,18 +82,14 @@ class _TestArtBoardState extends State<TestArtBoard> {
 
               widget.onChange!();
               redraw();
-              print("on scale start");
             },
             onScaleUpdate: (details) async {
               // print(details.pointerCount);
-              print("on scale update");
               if (details.pointerCount == 1) {
                 if (canvas.allowBrush()) {
-                  print("draw with brush");
                   canvas.brushMask.drawnPath.addToLast(details.localFocalPoint);
                   await _regenerateMask();
                 } else {
-                  print("pan image instead");
                   canvasGestureInteractionManager.onScaleUpdate(details);
                 }
               } else {
@@ -109,16 +102,13 @@ class _TestArtBoardState extends State<TestArtBoard> {
               // print(details.pointerCount);
               if (details.pointerCount == 1) {
                 if (canvas.allowBrush()) {
-                  print("end brush");
                 } else {
-                  print("undefined state 2   ");
                   canvasGestureInteractionManager.onScaleEnd(details);
                 }
               } else {
                 canvasGestureInteractionManager.onScaleEnd(details);
                 // redraw();
               }
-              print("on scale end");
               var paths = canvas.brushMask.drawnPath.paths;
               for (var path in paths) {
                 print(path);
@@ -129,7 +119,6 @@ class _TestArtBoardState extends State<TestArtBoard> {
             onTapDown: (details) {
               canvasGestureInteractionManager.onTapDown(details);
               // redraw();
-              print("on tap down");
               widget.onChange!();
             },
           ),

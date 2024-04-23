@@ -1,6 +1,7 @@
 import 'package:facts/game/model/message_popup_screen.dart';
 import 'package:facts/game/model/message_result.dart';
 import 'package:facts/data/model.dart';
+import 'package:facts/player_lab/comparator_utils.dart';
 import 'package:facts/player_lab/model/canvas.dart';
 import 'package:facts/player_lab/model/comparator.dart';
 import 'package:facts/player_lab/model/image.dart';
@@ -36,13 +37,16 @@ var data = Content(
             controls: [])
       ], zoom: 1.0, pan: const Offset(0, 0))
     ],
-    comparator: Comparator(
-      matchAlgorithm: PerceptualHash(),
-      match: 0.04,
-    ),
+    comparatorV2:
+        (PlayerLabCanvas currentCanvas, PlayerLabCanvas targetCanvas) {
+      var target = Offset(280, 15);
+      var current = currentCanvas.layers?[1].location;
+      return isAround(target, current!, 10);
+    },
     messageResult: MessageResult(
         success: MessagePopupScreen(
             title: "Bravo",
             message:
                 "Your image is being shared by thousands of people. This should stop the spread of the manipulated image"),
-        failure: MessagePopupScreen()));
+        failure: MessagePopupScreen(
+            title: "Oh No", message: "People aren't convinced")));
