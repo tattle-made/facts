@@ -12,33 +12,13 @@ import 'package:path_provider/path_provider.dart';
 
 Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
     PlayerLabCanvas artboard, Function onChange, Comparator? comparator) async {
-  // var targetImageData = await rootBundle.load(targetImage);
-  //
-  var tmpImage = "http://localhost:8081/image_1.png";
-  var artboardImageData = Uri.parse(tmpImage);
-
-  var tmpImage2 = "http://localhost:8081/image_4.png";
-  var artboardImageData2 = Uri.parse(tmpImage2);
-
-  var tmp_result = await compareImages(
-      src1: artboardImageData,
-      src2: artboardImageData2,
-      algorithm: PixelMatching());
-
-  print("RESULT : $tmp_result");
-
-  //
-  //
-  // targetImage
-
   print('clicked $w $h');
   var recorder = ui.PictureRecorder();
   var canvas = ui.Canvas(recorder);
 
-  var layerCompositor = LayerCompositor(playerLab: targetImage);
-  layerCompositor.paint(canvas, Size(w, h));
-  var picture = recorder.endRecording();
+  draw(canvas, Size(w, h), artboard, artboard.brushMask.imageBrushMask);
 
+  var picture = recorder.endRecording();
   ui.Image image = await picture.toImage(w.toInt(), h.toInt());
   final ByteData? pngBytes =
       await image.toByteData(format: ui.ImageByteFormat.png);
@@ -47,8 +27,7 @@ Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
   var recorder2 = ui.PictureRecorder();
   var canvas2 = ui.Canvas(recorder2);
 
-  var layerCompositor2 = LayerCompositor(playerLab: artboard);
-  layerCompositor2.paint(canvas, Size(w, h));
+  draw(canvas2, Size(w, h), targetImage, targetImage.brushMask.imageBrushMask);
 
   var picture2 = recorder2.endRecording();
   ui.Image image2 = await picture2.toImage(w.toInt(), h.toInt());
@@ -56,15 +35,15 @@ Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
       await image2.toByteData(format: ui.ImageByteFormat.png);
   var uInt8ListViewOverB2 = pngBytes2!.buffer.asUint8List();
 
-  // Directory saveDir = await getApplicationDocumentsDirectory();
-  // File saveFile = File('${saveDir.path}/test2.png');
-  //
-  // print(saveFile.toString());
-  //
-  // if (!saveFile.existsSync()) {
-  //   saveFile.createSync(recursive: true);
-  // }
-  // saveFile.writeAsBytesSync(pngBytes.buffer.asUint8List(), flush: true);
+  Directory saveDir = await getApplicationDocumentsDirectory();
+  File saveFile = File('${saveDir.path}/test2.png');
+
+  print(saveFile.toString());
+
+  if (!saveFile.existsSync()) {
+    saveFile.createSync(recursive: true);
+  }
+  saveFile.writeAsBytesSync(pngBytes.buffer.asUint8List(), flush: true);
 
   var result = await compareImages(
       src1: uInt8ListViewOverB,

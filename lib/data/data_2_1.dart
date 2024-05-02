@@ -49,6 +49,21 @@ var data = Content(
       matchAlgorithm: PerceptualHash(),
       match: 0.04,
     ),
+    comparatorV2: (PlayerLabCanvas playerCanvas, PlayerLabCanvas targetCanvas) {
+      ControlValueType? exposureControl = playerCanvas.layers?[0].controls[0];
+      Offset? bgOffset = playerCanvas!.layers?[0].location;
+
+      Offset? redCircleOffset = playerCanvas!.layers?[1].location;
+      double? redCircleZoom = playerCanvas!.layers?[1].zoom;
+
+      Offset? bannerLocation = playerCanvas!.layers?[2].location;
+
+      print(exposureControl);
+      print(bgOffset);
+      print(redCircleOffset);
+      print(redCircleZoom);
+      print(bannerLocation);
+    },
     messageResult: MessageResult(
         success: MessagePopupScreen(
             title: "wow", message: "I am surprised with your progress"),

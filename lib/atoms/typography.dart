@@ -52,12 +52,12 @@ Widget HeadingAlt2White(text) {
 
 Widget AccentButtonText(text) {
   return Text(text,
-      style: GoogleFonts.ibmPlexMono(
+      style: GoogleFonts.pressStart2p(
           textStyle: TextStyle(
               color: Color.fromARGB(255, 178, 43, 42),
-              fontSize: 24.0,
-              fontWeight: FontWeight.w300,
-              fontStyle: FontStyle.italic)));
+              fontSize: 16.0,
+              fontWeight: FontWeight.w200,
+              fontStyle: FontStyle.normal)));
 }
 
 Widget SimpleButtonText(text) {

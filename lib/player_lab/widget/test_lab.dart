@@ -7,6 +7,7 @@ import 'package:facts/atoms/timer.dart';
 import 'package:facts/player_lab/artboard_manager.dart';
 import 'package:facts/player_lab/image_comparator.dart';
 import 'package:facts/player_lab/model/canvas.dart';
+import 'package:facts/player_lab/model/layer_config.dart';
 import 'package:facts/player_lab/widget/test_art_board.dart';
 import 'package:facts/router_level.dart';
 import 'package:flutter/widgets.dart';
@@ -56,57 +57,67 @@ class _State extends State<TestLab> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            Row(
-              children: [
-                BlinkingText(),
-                Expanded(child: Container()),
-                Timer(
-                  key: ValueKey(widget.level.levelNumber),
-                ),
-              ],
+            BlinkingText(),
+            Expanded(child: Container()),
+            Timer(
+              key: ValueKey(widget.level.levelNumber),
             ),
-            Container(
-              child: CanvasLabel("TARGET IMAGE"),
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
-            ),
-            TestArtBoard(
-              canvas: targetCanvas,
-              onChange: redraw,
-            ),
-
-            Container(
-              child: CanvasLabel("YOUR CANVAS"),
-              margin: EdgeInsets.fromLTRB(0, 12, 0, 8),
-            ),
-            TestArtBoard(
-              canvas: playerCanvas,
-              onChange: redraw,
-            ),
-
-            // if (previewFile != null) Image.file(previewFile!)
-            // Text(
-            //   "score $score",
-            //   style: TextStyle(color: Color.fromARGB(255, 255, 255, 123)),
-            // )
           ],
-        )),
+        ),
         Container(
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
-          alignment: Alignment.bottomRight,
-          child: AccentButton(
-              label: "Submit",
-              onClick: () {
-                bool result = comparator?.call(playerCanvas, targetCanvas);
-                print("submission result : $result");
-                widget.onFinish!(result);
-              }),
+          child: CanvasLabel("TARGET IMAGE"),
+          alignment: Alignment.center,
+          margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+        ),
+        TestArtBoard(
+          canvas: targetCanvas,
+          onChange: redraw,
+        ),
+
+        Container(
+          child: CanvasLabel("YOUR CANVAS"),
+          alignment: Alignment.center,
+          margin: EdgeInsets.fromLTRB(0, 40, 0, 16),
+        ),
+        TestArtBoard(
+          canvas: playerCanvas,
+          onChange: redraw,
+        ),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+            alignment: Alignment.bottomCenter,
+            child: AccentButton(
+                label: "Submit",
+                onClick: () async {
+                  // bool result = comparator?.call(playerCanvas, targetCanvas);
+                  // print("submission result : $result");
+                  // widget.onFinish!(result);
+                  //
+                  // var width = 360.0;
+                  // var height = 206.0;
+                  // bool result = await compare(targetCanvas, width, height,
+                  //     playerCanvas, onChange, widget.level.content.comparator);
+                  // print(result);
+
+                  print(playerCanvas);
+                  print(targetCanvas);
+                  // print(result);
+
+                  widget.onFinish!(true);
+                }),
+          ),
         )
+        // if (previewFile != null) Image.file(previewFile!)
+        // Text(
+        //   "score $score",
+        //   style: TextStyle(color: Color.fromARGB(255, 255, 255, 123)),
+        // )
       ],
     );
   }

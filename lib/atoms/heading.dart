@@ -31,7 +31,7 @@ Widget SenderLabel(text) {
 
 Widget CanvasLabel(text) {
   return Text(text,
-      style: GoogleFonts.ibmPlexMono(
+      style: GoogleFonts.pressStart2p(
           textStyle: TextStyle(
         color: primary,
         fontSize: 16.0,

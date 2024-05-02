@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -66,7 +67,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var currentPage = facts_page.Page.HOME;
+  var currentPage = facts_page.Page.GAME;
   final factory = AppFactory();
   late ManagerAudio audioManager;
   late PlausibleAnalytics analyticsManager;

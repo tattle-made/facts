@@ -37,9 +37,12 @@ var data = Content(
       ], zoom: 1.0, pan: const Offset(0, 0))
     ],
     comparator: Comparator(
-      matchAlgorithm: PerceptualHash(),
+      matchAlgorithm: PixelMatching(),
       match: 0.04,
     ),
+    comparatorV2: (PlayerLabCanvas playerCanvas, PlayerLabCanvas targetCanvas) {
+      return true;
+    },
     messageResult: MessageResult(
         success: MessagePopupScreen(title: "Horray", message: "You did it!"),
         failure: MessagePopupScreen(

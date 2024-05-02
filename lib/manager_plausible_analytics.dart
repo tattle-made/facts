@@ -12,7 +12,7 @@ class PlausibleAnalytics {
 
   void init() async {
     if (kIsWeb) {
-      print('we are on web platform');
+      print('we are on web platform 0.0.1');
       try {
         userAgent = html.window.navigator.userAgent;
         // print(userAgent);

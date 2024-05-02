@@ -11,24 +11,27 @@ class WrapperArtBoard extends StatelessWidget {
     // var height = 170 / 297 * MediaQuery.of(context).size.width;
     //
     // print("real $width, $height");
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: 170 / 297 * MediaQuery.of(context).size.width,
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.red,
+    return Container(
+      // alignment: Alignment.center,
+      child: SizedBox(
+        width: 360,
+        height: 206,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(6),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromARGB(255, 178, 43, 42),
+                    spreadRadius: 4.0,
+                    blurRadius: 6.2),
+                BoxShadow(color: Colors.red, spreadRadius: 1.0),
+              ],
+              backgroundBlendMode: BlendMode.colorBurn),
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromARGB(255, 178, 43, 42),
-                  spreadRadius: 4.0,
-                  blurRadius: 6.2),
-              BoxShadow(color: Colors.red, spreadRadius: 1.0),
-            ],
-            backgroundBlendMode: BlendMode.colorBurn),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: child,
+            child: child,
+          ),
         ),
       ),
     );

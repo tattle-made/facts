@@ -69,9 +69,7 @@ class _TestArtBoardState extends State<TestArtBoard> {
               if (details.pointerCount == 1) {
                 if (canvas.allowBrush()) {
                   canvas.brushMask.drawnPath.initializeNewPath();
-                  canvas.brushMask.drawnPath.setDimension(
-                      MediaQuery.of(context).size.width.floor(),
-                      (170 / 297 * MediaQuery.of(context).size.width).floor());
+                  canvas.brushMask.drawnPath.setDimension(360, 206);
                 } else {
                   canvasGestureInteractionManager.onScaleStart(details);
                 }

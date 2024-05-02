@@ -41,7 +41,10 @@ var data = Content(
         (PlayerLabCanvas currentCanvas, PlayerLabCanvas targetCanvas) {
       var target = Offset(280, 15);
       var current = currentCanvas.layers?[1].location;
-      return isAround(target, current!, 10);
+
+      print(current);
+
+      // return isAround(target, current!, 10);
     },
     messageResult: MessageResult(
         success: MessagePopupScreen(
