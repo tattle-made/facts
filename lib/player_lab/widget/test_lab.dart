@@ -60,15 +60,15 @@ class _State extends State<TestLab> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          children: [
-            BlinkingText(),
-            Expanded(child: Container()),
-            Timer(
-              key: ValueKey(widget.level.levelNumber),
-            ),
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     BlinkingText(),
+        //     Expanded(child: Container()),
+        //     Timer(
+        //       key: ValueKey(widget.level.levelNumber),
+        //     ),
+        //   ],
+        // ),
         Container(
           child: CanvasLabel("TARGET IMAGE"),
           alignment: Alignment.center,
@@ -95,7 +95,8 @@ class _State extends State<TestLab> {
             child: AccentButton(
                 label: "Submit",
                 onClick: () async {
-                  // bool result = comparator?.call(playerCanvas, targetCanvas);
+                  var result =
+                      await comparator?.call(playerCanvas, targetCanvas);
                   // print("submission result : $result");
                   // widget.onFinish!(result);
                   //
@@ -105,11 +106,10 @@ class _State extends State<TestLab> {
                   //     playerCanvas, onChange, widget.level.content.comparator);
                   // print(result);
 
-                  print(playerCanvas);
-                  print(targetCanvas);
-                  // print(result);
+                  // print(playerCanvas);
+                  // print(targetCanvas);
 
-                  widget.onFinish!(true);
+                  widget.onFinish!(result);
                 }),
           ),
         )

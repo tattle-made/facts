@@ -10,8 +10,8 @@ import 'dart:ui' as ui;
 
 import 'package:path_provider/path_provider.dart';
 
-Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
-    PlayerLabCanvas artboard, Function onChange, Comparator? comparator) async {
+Future<double> compare(PlayerLabCanvas targetImage, double w, double h,
+    PlayerLabCanvas artboard, Algorithm matchAlgorithm) async {
   print('clicked $w $h');
   var recorder = ui.PictureRecorder();
   var canvas = ui.Canvas(recorder);
@@ -48,13 +48,7 @@ Future<bool> compare(PlayerLabCanvas targetImage, double w, double h,
   var result = await compareImages(
       src1: uInt8ListViewOverB,
       src2: uInt8ListViewOverB2,
-      algorithm: comparator!.matchAlgorithm);
+      algorithm: matchAlgorithm);
 
-  print("comparator : ${comparator.match}, ${comparator.threshold}");
-  print("result : $result");
-
-  // onChange(saveFile);
-  // onChange(result);
-
-  return true;
+  return result;
 }

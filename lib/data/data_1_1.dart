@@ -42,9 +42,7 @@ var data = Content(
       var target = Offset(280, 15);
       var current = currentCanvas.layers?[1].location;
 
-      print(current);
-
-      // return isAround(target, current!, 10);
+      return isAround(target, current!, 10);
     },
     messageResult: MessageResult(
         success: MessagePopupScreen(

@@ -70,6 +70,7 @@ class _TestArtBoardState extends State<TestArtBoard> {
                 if (canvas.allowBrush()) {
                   canvas.brushMask.drawnPath.initializeNewPath();
                   canvas.brushMask.drawnPath.setDimension(360, 206);
+                  print("on scale start with brush");
                 } else {
                   canvasGestureInteractionManager.onScaleStart(details);
                 }
@@ -85,6 +86,7 @@ class _TestArtBoardState extends State<TestArtBoard> {
               // print(details.pointerCount);
               if (details.pointerCount == 1) {
                 if (canvas.allowBrush()) {
+                  print("on scale update with brush");
                   canvas.brushMask.drawnPath.addToLast(details.localFocalPoint);
                   await _regenerateMask();
                 } else {
@@ -100,6 +102,7 @@ class _TestArtBoardState extends State<TestArtBoard> {
               // print(details.pointerCount);
               if (details.pointerCount == 1) {
                 if (canvas.allowBrush()) {
+                  print("on scale end with brush");
                 } else {
                   canvasGestureInteractionManager.onScaleEnd(details);
                 }
@@ -108,9 +111,9 @@ class _TestArtBoardState extends State<TestArtBoard> {
                 // redraw();
               }
               var paths = canvas.brushMask.drawnPath.paths;
-              for (var path in paths) {
-                print(path);
-              }
+              // for (var path in paths) {
+              //   print(path);
+              // }
               widget.onChange!();
               redraw();
             },

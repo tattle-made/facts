@@ -35,7 +35,7 @@ class PlayerLabCanvas {
   @override
   String toString() {
     // return "Pan : $pan\n\nLayers :\n${layers!.map((e) => e).join("\n")} \n";
-    return "Zoom : $zoom\n\nLayers :\n${layers!.map((e) => e).join("\n")} \n";
+    return "Zoom : $zoom\n\nLayers :\n${layers!.map((e) => e).join("\n")} \n Mask: \n $brushMask";
   }
 
   void clickHandler(Offset pointer) {

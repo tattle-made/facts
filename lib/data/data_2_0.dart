@@ -22,7 +22,8 @@ var data = Content(
           text: "This is rudimentary use of exposure settings on the image.",
           sender: "detective"),
       Message(text: "Can you explain that to the intern?", sender: "boss"),
-      Message(text: "You think you can handle it?", sender: "detective"),
+      Message(
+          text: "You think you can handle it @intern?", sender: "detective"),
       Message(text: "uhh... I can try", sender: "you"),
       Message(
           text: "Go to the lab. I'll prep the canvas for you.",

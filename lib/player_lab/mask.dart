@@ -68,6 +68,10 @@ class Mask {
         buffer[offset + 2] = 255;
       }
     }
+
+    print("===");
+    print(buffer.length);
+
     final immutable = await ui.ImmutableBuffer.fromUint8List(buffer);
     final descriptor = ui.ImageDescriptor.raw(
       immutable,
@@ -83,5 +87,10 @@ class Mask {
     imageBrushMask = frameInfo.image;
 
     isInitialized = true;
+  }
+
+  @override
+  String toString() {
+    return drawnPath.paths.length.toString();
   }
 }

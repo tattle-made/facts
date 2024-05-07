@@ -11,6 +11,7 @@ import 'package:facts/player_lab/model/layer.dart';
 import 'package:facts/player_lab/model/layer_config.dart';
 import 'package:flutter/animation.dart';
 import 'package:image_compare/image_compare.dart';
+import 'package:facts/player_lab/comparator_utils.dart';
 
 // honey color puzzle
 
@@ -31,7 +32,7 @@ var data = Content(
             location: const Offset(0, 0),
             controls: [
               ControlValueDoubleRange(value: 0, min: -5, max: 5, label: 'Temp'),
-              ControlValueDoubleRange(value: 0, min: -5, max: 5, label: 'Tint')
+              ControlValueDoubleRange(value: -5, min: -5, max: 5, label: 'Tint')
             ]),
       ], zoom: 1.0, pan: const Offset(0, 0)),
       PlayerLabCanvas(layers: [
@@ -47,6 +48,15 @@ var data = Content(
       matchAlgorithm: PerceptualHash(),
       match: 0.04,
     ),
+    comparatorV2: (PlayerLabCanvas playerCanvas, PlayerLabCanvas targetCanvas) {
+      ControlValueType? tempControl = playerCanvas.layers?[1].controls[0];
+      var tempControlStatus = isValueAround(-2.45, tempControl?.value, 0.5);
+
+      ControlValueType? tintControl = playerCanvas.layers?[1].controls[1];
+      var tintControlStatus = isValueAround(-0.46, tintControl?.value, 0.5);
+
+      return tempControlStatus && tintControlStatus;
+    },
     messageResult: MessageResult(
         success: MessagePopupScreen(
             title: "wow", message: "I am surprised with your progress"),

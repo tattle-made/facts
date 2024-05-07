@@ -20,7 +20,7 @@ var data = Content(
           sender: "detective"),
       Message(
           text:
-              "I think this intern will do just fine. Intern, I am putting you on a breaking story. Food Vlogger Masoorie has died!",
+              "I think this intern will do just fine. @intern I am putting you on a breaking story. Food Vlogger Masoorie has died!",
           sender: "boss"),
       Message(
           imagePath: "assets/masoori-faint.gif", text: "hi", sender: "boss"),
@@ -48,7 +48,7 @@ var data = Content(
           sender: "boss"),
       Message(
           text:
-              "Alright then. I will setup the canvas for you intern. But I have other pressing matters to look into. see if you can use the 'TRANSLATE' operation to match the manufactured image.",
+              "Alright then. I will setup the canvas for you @intern. But I have other pressing matters to look into. see if you can use the 'TRANSLATE' operation to match the manufactured image.",
           sender: "boss"),
       Message(text: "ummm. ok I will try 😬", sender: "you"),
     ],

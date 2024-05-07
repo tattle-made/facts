@@ -8,46 +8,23 @@ import 'package:facts/data/model.dart';
 var data = Content(
     type: ContentType.message,
     messages: <Message>[
+      Message(text: "Have the rumours settled down?", sender: "detective"),
       Message(
           text:
-              "level 4_0 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ex vel mauris imperdiet blandit. Fusce ac volutpat nunc. Donec vulputate varius metus a venenatis. Aenean scelerisque posuere nisi. Mauris eleifend dolor ac suscipit faucibus. Duis gravida semper velit, at laoreet nunc tempus ac.",
+              "Most of them have but on the fringes you see some outrageous ones",
           sender: "boss"),
       Message(
           text:
-              "level 3_0 In consectetur hendrerit orci, a elementum arcu ultrices sit amet. Mauris id suscipit neque, id consequat dolor. Proin pulvinar est quis lorem semper pharetra.",
-          sender: "you"),
-      Message(
-          text:
-              "level 3_0 Quisque ultricies congue odio, ut semper purus tincidunt quis. Donec tempus rhoncus nibh eget feugiat. Duis et cursus leo, vitae bibendum urna. Sed at leo vulputate, volutpat sem eu, euismod velit. ",
+              "Members of horoscope_is_bae are claiming that her life line was pre destined to be cut short. As seen by the lines on her hand",
           sender: "boss"),
+      Message(imagePath: "assets/p5t.png", text: "hi", sender: "boss"),
       Message(
           text:
-              "level 3_0 In laoreet sapien at ultrices mattis. Etiam auctor sapien eu mollis tempus.",
-          sender: "you"),
-      Message(
-          text:
-              "level 3_0 Phasellus lacinia nisl ut mauris porta dapibus. In placerat aliquam facilisis.",
+              "This is beneath me. @intern you know how to use the smudge tool? Just rub your finger on the missing hand line till it matches the target image.",
           sender: "detective"),
-      Message(
-          text:
-              "level 3_0 Nunc dictum risus turpis, viverra pretium neque suscipit ut.",
-          sender: "boss"),
-      Message(
-          text:
-              "level 3_0 Nulla risus arcu, cursus non auctor nec, dignissim pretium mauris. Proin magna enim, luctus nec lacinia eget, finibus vel mi. ",
-          sender: "boss"),
-      Message(
-          text:
-              "level 3_0 Praesent commodo leo sed neque vehicula sagittis. Praesent sed blandit neque, facilisis feugiat magna. Nam quis enim mauris. Mauris tincidunt enim quis neque porta, eu luctus risus consequat.",
-          sender: "you"),
-      Message(
-          text:
-              "level 3_0 Praesent tincidunt mauris molestie ipsum varius eleifend. Duis sollicitudin, neque vitae fringilla pellentesque, ",
-          sender: "boss"),
-      Message(
-          text:
-              "level 3_0  sem ipsum iaculis erat, ac dapibus tortor tellus sed lorem. Cras placerat metus sed orci tincidunt iaculis. Vivamus vitae nibh non tellus eleifend congue eget ac libero. ",
-          sender: "you"),
+      Message(text: "This looks tricky", sender: "you"),
+      Message(text: "We trust you now", sender: "boss"),
+      Message(text: "Thank you 😭", sender: "you"),
     ],
     messageResult: MessageResult(
         success: MessagePopupScreen(), failure: MessagePopupScreen()));

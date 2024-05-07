@@ -5,7 +5,7 @@ import 'package:facts/router_level.dart';
 class AppFactory {
   final audioManager = ManagerAudio();
   final analyticsManager = PlausibleAnalytics();
-  final levelRouter = RouterLevel(path: "4.1.0");
+  final levelRouter = RouterLevel(path: "1.0.0");
 
   void init() {
     audioManager.init();

@@ -67,7 +67,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var currentPage = facts_page.Page.GAME;
+  var currentPage = facts_page.Page.HOME;
   final factory = AppFactory();
   late ManagerAudio audioManager;
   late PlausibleAnalytics analyticsManager;
@@ -255,6 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
             message: messagePopupScreen,
             onClose: () {
               var nextLevel = levelRouter.nextLevel();
+
               setState(() {
                 print('false in on close');
                 levelRouter = nextLevel;
